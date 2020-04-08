@@ -1,8 +1,11 @@
 const express = require('express');
-const logger = require('morgan');               //why can't I change my name here?
+const cors = require('cors');
+const logger = require('morgan');
 const bodyParser = require('body-parser');
 
-const usersRoutes = require('./routes/users.routes');
+const tasksRoutes = require('./routes/tasks.routes');
+const authRoutes = require('./routes/auth.routes');
+const userRoutes = require('./routes/user.routes');
 const middleware = require('./middleware/errors.middleware');
 
 const app = express();
@@ -16,16 +19,20 @@ app.use(logger(logLevel));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
+// Allow websites to talk to our API service.
+app.use(cors());
+
 // ************************************
 // ROUTE-HANDLING MIDDLEWARE FUNCTIONS
 // ************************************
 
-// Handle routes for tasks and users.
-// app.use('/tasks', tasksRoutes); // http://localhost:3000/tasks
-app.use('/users', usersRoutes); // http://localhost:3000/users
+// Partial API endpoints
+app.use('/api/auth', authRoutes); // http://localhost:3000/api/auth
+app.use('/api/user', userRoutes); // http://localhost:3000/api/users
+app.use('/api/tasks', tasksRoutes); // http://localhost:3000/api/tasks
 
 // Handle 404 requests
-app.use(middleware.error404); // http://loaclhost:3000/users
+app.use(middleware.error404);
 
 // Handle 500 requests - applies mostly to live services
 app.use(middleware.error500);
