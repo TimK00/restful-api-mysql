@@ -14,7 +14,7 @@ const password = process.env.DB_PASS || 'password';
 // Get the Database from Environment or use default
 const database = process.env.DB_DATABASE || 'tododb';
 
-// Create the connection with required details
+// Create the connection with required detail
 const con = mysql.createConnection({
   host,
   user,
