@@ -28,7 +28,7 @@ app.use(cors());
 
 // Partial API endpoints
 app.use('/api/auth', authRoutes); // http://localhost:3000/api/auth
-app.use('/api/user', userRoutes); // http://localhost:3000/api/users
+app.use('/api/user', userRoutes); // http://localhost:3000/api/user
 app.use('/api/tasks', tasksRoutes); // http://localhost:3000/api/tasks
 
 // Handle 404 requests

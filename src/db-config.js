@@ -9,10 +9,10 @@ const host = process.env.DB_HOST || 'localhost';
 const user = process.env.DB_USER || 'root';
 
 // Get the Password for DB from Environment or use default
-const password = process.env.DB_PASS || 'password';
+const password = process.env.DB_PASS || '';
 
 // Get the Database from Environment or use default
-const database = process.env.DB_DATABASE || 'tododb';
+const database = process.env.DB_DATABASE || 'test';
 
 // Create the connection with required detail
 const con = mysql.createConnection({
