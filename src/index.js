@@ -3,7 +3,7 @@ const cors = require('cors');
 const logger = require('morgan');
 const bodyParser = require('body-parser');
 
-const tasksRoutes = require('./routes/tasks.routes');
+const tasksRoutes = require('./routes/recipes.routes');
 const authRoutes = require('./routes/auth.routes');
 const userRoutes = require('./routes/user.routes');
 const middleware = require('./middleware/errors.middleware');
