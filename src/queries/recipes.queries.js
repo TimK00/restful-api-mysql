@@ -16,7 +16,6 @@
 exports.CREATE_RECIPES_TABLE = `CREATE TABLE IF NOT EXISTS recipes(
     recipe_id int NOT NULL AUTO_INCREMENT,
     recipe_name varchar(255) NOT NULL,
-    upload_date DATETIME DEFAULT CURRENT_TIMESTAMP(),
     difficulty varchar(10) DEFAULT 'easy',
     PRIMARY KEY (recipe_id)
   )`;
@@ -36,7 +35,7 @@ exports.CREATE_RECIPES_TABLE = `CREATE TABLE IF NOT EXISTS recipes(
    * - column names match the order the are in the table
    * - `?` allow us to use params in our controllers
    */
-  exports.INSERT_RECIPE = `INSERT INTO recipes (recipe_id, recipe_name, difficulty) VALUES (?, ?, ?)`;
+  exports.INSERT_RECIPE = `INSERT INTO recipes (recipe_name) VALUES (?)`;
   
   /**
    * Update follows syntax:

@@ -1,4 +1,11 @@
 const express = require('express');
+const {
+  getAllRecipes,
+  createRecipe,
+  getRecipe,
+  updateRecipe,
+  deleteRecipe,
+} = require('../controllers/recipes.controller');
 const controllers = require('../controllers/recipes.controller');
 
 const recipesRoutes = express.Router();
