@@ -1,6 +1,7 @@
 const mysql = require('mysql');
-const authQueries = require('./queries/auth.queries');
-const tasksQueries = require('./queries/recipes.queries');
+const { CREATE_USERS_TABLE } = require('./queries/user.queries');
+const { CREATE_RECIPES_TABLE } = require('./queries/recipes.queries');
+const query = require('../utils/query');
 
 // Get the Host from Environment or use default
 const host = process.env.DB_HOST || 'localhost';
@@ -14,28 +15,46 @@ const password = process.env.DB_PASS || '';
 // Get the Database from Environment or use default
 const database = process.env.DB_DATABASE || 'test';
 
-// Create the connection with required detail
-const con = mysql.createConnection({
-  host,
-  user,
-  password,
-  database
-});
+const connection = async () =>
+  new Promise((resolve, reject) => {
+    const con = mysql.createConnection({
+      host,
+      user,
+      password,
+      database,
+    });
 
-// Connect to the database.
-con.connect(function(err) {
-  if (err) throw err;
-  console.log('Connected!');
+    con.connect((err) => {
+      if (err) {
+        reject(err);
+        return;
+      }
+    });
 
-  con.query(authQueries.CREATE_USERS_TABLE, function(err, result) {
-    if (err) throw err;
-    console.log('Users table created or exists already!');
+    resolve(con);
   });
 
-  con.query(tasksQueries.CREATE_RECIPES_TABLE, function(err, result) {
-    if (err) throw err;
-    console.log('Tasks table created or exists already!');
+// Create the connection with required details
+(async () => {
+  const _con = await connection().catch((err) => {
+    throw err;
   });
-});
 
-module.exports = con;
+  const userTableCreated = await query(_con, CREATE_USERS_TABLE).catch(
+    (err) => {
+      console.log(err);
+    }
+  );
+
+  const recipesTableCreated = await query(_con, CREATE_RECIPES_TABLE).catch(
+    (err) => {
+      console.log(err);
+    }
+  );
+
+  if (!!userTableCreated && !!recipesTableCreated) {
+    console.log('Tables Created!');
+  }
+})();
+
+module.exports = connection;
