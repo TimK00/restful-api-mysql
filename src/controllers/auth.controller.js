@@ -43,7 +43,9 @@ exports.register = async (req, res) => {
         .send({ msg: 'Could not register user. Please try again later.' });
     });
 
-    res.send({ msg: 'New user created!' });
+    if (result.length) {
+      res.send({ msg: 'New user created!' });
+    }
   }
 };
 
@@ -126,7 +128,6 @@ exports.token = (req, res) => {
         expires_in: 20,
         refresh_token: refreshToken,
       });
-      console.log(accessToken);
   }
   res.status(403).send({ msg: 'Invalid Token' });
 };

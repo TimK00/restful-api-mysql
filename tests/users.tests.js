@@ -5,7 +5,7 @@
 // chai.use(chaiHttp);
 
 // const token =
-//   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNTg2Mjk5NzgzLCJleHAiOjE1ODYzODYxODN9.0WGrPHozwciIqD2iaoraPnLGC4nWV2ydqLUOKD7ra5I';
+//   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNTg3NjAyMTAxLCJleHAiOjE1ODc2ODg1MDF9.PfeoDYNI-RGpf0SGMnintrK7fEjBYn00KlJmE08-r5M';
 
 // describe('User API service', () => {
 //   it("should GET a logged in user's unique id, username, and password", (done) => {

@@ -1,7 +1,7 @@
 const chai = require('chai');
 const expect = chai.expect;
 const chaiHttp = require('chai-http');
-const token ="Bearer <eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNTg3NjAyMTAxLCJleHAiOjE1ODc2ODg1MDF9.PfeoDYNI-RGpf0SGMnintrK7fEjBYn00KlJmE08-r5M>"; 
+const token ="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNTg3NzU2MzI3LCJleHAiOjE1ODc4NDI3Mjd9.Ndj2b83ZCtd0JppcS_w0mK11obGNqvR07OxqE3t_X3Y"; 
 
 chai.use(chaiHttp);
 
@@ -10,7 +10,7 @@ describe('Recipes API Service', function () {
     chai
       .request('http://localhost:3000')
       .get('/api/recipes')
-      .set('access_token', token)
+      .set('Authorization', `Bearer ${token}`)
       .end(function (err, resp) {
         expect(resp.status).to.be.eql(200);
         expect(resp.body).to.be.a('array');
@@ -23,7 +23,7 @@ describe('Recipes API Service', function () {
     const expected = [
       {
         recipe_id: 1,
-        recipe_name: "toast",
+        recipe_name: "eggs",
         difficulty: "easy",
       },
     ];
@@ -31,7 +31,7 @@ describe('Recipes API Service', function () {
     chai
       .request('http://localhost:3000')
       .get('/api/recipes/1')
-      .set('access_token', token)
+      .set('Authorization', `Bearer ${token}`)
       .end(function (err, resp) {
         expect(resp.status).to.be.eql(200);
         expect(resp.body).to.be.a('array');
@@ -50,7 +50,7 @@ describe('Recipes API Service', function () {
     chai
       .request('http://localhost:3000')
       .post('/api/recipes')
-      .set('access_token', token)
+      .set('Authorization', `Bearer ${token}`)
       .send(newRecipe)
       .end(function (err, resp) {
         expect(resp.status).to.be.eql(200);
