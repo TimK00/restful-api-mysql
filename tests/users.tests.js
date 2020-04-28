@@ -5,15 +5,15 @@
 // chai.use(chaiHttp);
 
 // const token =
-//   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNTg2Mjk5NzgzLCJleHAiOjE1ODYzODYxODN9.0WGrPHozwciIqD2iaoraPnLGC4nWV2ydqLUOKD7ra5I';
+//   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNTg4MDE5NzE1LCJleHAiOjE1ODgxMDYxMTV9.MSswUfEju6e8qM6FglrWr7-sQ0Gr_naRoOl3_rJSco8';
 
 // describe('User API service', () => {
 //   it("should GET a logged in user's unique id, username, and password", (done) => {
 //     const expected = [
 //       {
-//         user_id: 1,
-//         username: 'admin',
-//         email: 'admin@example.com',
+//         user_id: 2,
+//         username: 'tim',
+//         email: 'tim@email.com',
 //       },
 //     ];
 
@@ -28,11 +28,11 @@
 //   });
 
 //   // run one time then skip once working
-//   it.skip('should PUT updated credentials for a logged in user', (done) => {
+//   it('should PUT updated credentials for a logged in user', (done) => {
 //     const updatedUser = {
-//       username: 'admin2',
-//       password: 'newPassword',
-//       email: 'admin@example.com',
+//       username: 'admin3',
+//       password: 'admin3',
+//       email: 'tim@email.com',
 //     };
 //     const expected = { msg: 'Updated succesfully!' };
 
@@ -47,11 +47,11 @@
 //       });
 //   });
 
-//   it('should PUT updated credentials for a logged in user', (done) => {
+//   it('should not PUT updated credentials for a duplicate logged in user', (done) => {
 //     const updatedUser = {
-//       username: 'admin2',
-//       password: 'newPassword',
-//       email: 'admin@example.com',
+//       username: 'admin3',
+//       password: 'admin3',
+//       email: 'tim@email.com',
 //     };
 //     const expected = { msg: 'Nothing to update...' };
 

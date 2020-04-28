@@ -2,7 +2,7 @@
  * Tables follow syntax:
  * - CREATE TABLE <table_name>(<column_name> <data_type> <options>, ...)
  *
- * Create a table called `recipes` (case-insensitive), with
+ * Create a table called `articles` (case-insensitive), with
  * - id as an integer/number that can't have null values, auto-increment it
  * - name with a max of 255 characters, cannot have null values
  * - created_date set to date and time created
@@ -13,29 +13,29 @@
  * - id is always first (helps with inserting)
  * - defaults always specifed last (helps with inserting)
  */
-exports.CREATE_RECIPES_TABLE = `CREATE TABLE IF NOT EXISTS recipes(
-    recipe_id int NOT NULL AUTO_INCREMENT,
-    recipe_name varchar(255) NOT NULL,
-    difficulty varchar(10) DEFAULT 'easy',
-    PRIMARY KEY (recipe_id)
+exports.CREATE_ARTICLES_TABLE = `CREATE TABLE IF NOT EXISTS articles(
+    article_id int NOT NULL AUTO_INCREMENT,
+    article_name varchar(255) NOT NULL,
+    author varchar(255) DEFAULT 'easy',
+    PRIMARY KEY (article_id)
   )`;
   
-  // Get every recipe
-  exports.ALL_RECIPES = `SELECT * FROM recipes`;
+  // Get every article
+  exports.ALL_ARTICLES = `SELECT * FROM articles`;
   
-  // Get a single recipe by id
-  exports.SINGLE_RECIPE = `SELECT * FROM recipes WHERE recipe_id = ?`;
+  // Get a single article by id
+  exports.SINGLE_ARTICLE = `SELECT * FROM articles WHERE article_id = ?`;
   
   /**
    * Insert follows syntax:
    * - INSERT INTO <table_name>(<col_name1>, <col_name3>, <col_name3>, ...)
    *    VALUES(<value1>, <value2>, <value3>, ...)
    *
-   * Create a new recipe in `recipes` table where
+   * Create a new article in `articles` table where
    * - column names match the order the are in the table
    * - `?` allow us to use params in our controllers
    */
-  exports.INSERT_RECIPE = `INSERT INTO recipes (recipe_name, difficulty) VALUES (?, ?)`;
+  exports.INSERT_ARTICLE = `INSERT INTO articles (article_name, author) VALUES (?, ?)`;
   
   /**
    * Update follows syntax:
@@ -43,8 +43,8 @@ exports.CREATE_RECIPES_TABLE = `CREATE TABLE IF NOT EXISTS recipes(
    *
    * NOTE: omitting `WHERE` will result in updating every existing entry.
    */
-  exports.UPDATE_RECIPE = `UPDATE recipes SET recipe_name = ?, difficulty = ? WHERE id = ?`;
+  exports.UPDATE_ARTICLE = `UPDATE articles SET article_name = ?, author = ? WHERE id = ?`;
   
-  // Delete a recipe by id
-  exports.DELETE_RECIPE = `DELETE FROM recipes WHERE id = ?`;
+  // Delete a article by id
+  exports.DELETE_ARTICLE = `DELETE FROM articles WHERE id = ?`;
   

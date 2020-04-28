@@ -1,6 +1,7 @@
 const mysql = require('mysql');
 const { CREATE_USERS_TABLE } = require('./queries/user.queries');
 const { CREATE_RECIPES_TABLE } = require('./queries/recipes.queries');
+const { CREATE_ARTICLES_TABLE } = require("./queries/articles.queries");
 const query = require('../utils/query');
 
 // Get the Host from Environment or use default
@@ -52,7 +53,13 @@ const connection = async () =>
     }
   );
 
-  if (!!userTableCreated && !!recipesTableCreated) {
+  const articlesTableCreated = await query(_con, CREATE_ARTICLES_TABLE).catch(
+    (err) => {
+      console.log(err);
+    }
+  );
+
+  if (!!userTableCreated && !!recipesTableCreated && !!articlesTableCreated) {
     console.log('Tables Created!');
   }
 })();

@@ -1,11 +1,11 @@
 const connection = require('../db-config');
 const {
-  ALL_RECIPES,
-  SINGLE_RECIPE,
-  INSERT_RECIPE,
-  UPDATE_RECIPE,
-  DELETE_RECIPE,
-} = require('../queries/recipes.queries');
+  ALL_ARTICLES,
+  SINGLE_ARTICLE,
+  INSERT_ARTICLE,
+  UPDATE_ARTICLE,
+  DELETE_ARTICLE,
+} = require('../queries/articles.queries');
 const query = require('../../utils/query');
 
 /**
@@ -16,50 +16,50 @@ const query = require('../../utils/query');
  * DELETE - Delete
  */
 
-// http://localhost:3000/recipes
-exports.getAllRecipes = async (req, res) => {
+// http://localhost:3000/articles
+exports.getAllArticles = async (req, res) => {
   // establish connection
   const con = await connection().catch((err) => {
     throw err;
   });
 
-  // query all recipes
-  const recipes = await query(con, ALL_RECIPES).catch((err) => {
+  // query all articles
+  const articles = await query(con, ALL_ARTICLES).catch((err) => {
     res.send(err);
   });
 
-  if (recipes.length) {
-    res.json(recipes);
+  if (articles.length) {
+    res.json(articles);
   }
 };
 
-// http://localhost:3000/recipes/1
-exports.getRecipe = async (req, res) => {
+// http://localhost:3000/articles/1
+exports.getArticle = async (req, res) => {
   // establish connection
   const con = await connection().catch((err) => {
     throw err;
   });
 
-  // query all recipe
-  const recipe = await query(con, SINGLE_RECIPE, [req.params.recipeId]).catch(
+  // query all article
+  const article = await query(con, SINGLE_ARTICLE, [req.params.articleId]).catch(
     (err) => {
       res.send(err);
     }
   );
 
-  if (recipe.length) {
-    res.json(recipe);
+  if (article.length) {
+    res.json(article);
   }
 };
 
-// http://localhost:3000/recipes
+// http://localhost:3000/articles
 /**
  * POST request -
  * {
- *  name: 'A recipe name'
+ *  name: 'A article name'
  * }
  */
-exports.createRecipe = async (req, res) => {
+exports.createArticle = async (req, res) => {
   // verify valid token
   const decoded = req.user; // {id: 1, iat: wlenfwekl, expiredIn: 9174323 }
 
@@ -70,38 +70,38 @@ exports.createRecipe = async (req, res) => {
       throw err;
     });
 
-    // query add recipe
-    const result = await query(con, INSERT_RECIPE, [req.body.recipe_name, req.body.difficulty]).catch(
+    // query add article
+    const result = await query(con, INSERT_ARTICLE, [req.body.article_name, req.body.author]).catch(
       (err) => {
         res.send(err);
       }
     );
 
     if (result.affectedRows === 1) {
-      res.json({ message: 'Added recipe successfully!' });
+      res.json({ message: 'Added article successfully!' });
     }
   }
 };
 
-// http://localhost:3000/recipes/1
+// http://localhost:3000/articles/1
 /**
  * PUT request -
  * {
- *  name: 'A recipe name',
+ *  name: 'A article name',
  *  state: 'completed'
  * }
  */
-exports.updateRecipe = async (req, res) => {
+exports.updateArticle = async (req, res) => {
   // establish connection
   const con = await connection().catch((err) => {
     throw err;
   });
 
-  // query update recipe
-  const result = await query(con, UPDATE_RECIPE, [
-    req.body.recipe_name,
-    req.body.difficulty,
-    req.params.recipeId,
+  // query update article
+  const result = await query(con, UPDATE_ARTICLE, [
+    req.body.article_name,
+    req.body.author,
+    req.params.articleId,
   ]).catch((err) => {
     res.send(err);
   });
@@ -111,15 +111,15 @@ exports.updateRecipe = async (req, res) => {
   }
 };
 
-// http://localhost:3000/recipes/1
-exports.deleteRecipe = async (req, res) => {
+// http://localhost:3000/articles/1
+exports.deleteArticle = async (req, res) => {
   // establish connection
   const con = await connection().catch((err) => {
     throw err;
   });
 
-  // query delete recipe
-  const result = await query(con, DELETE_RECIPE, [req.params.recipe_id]).catch(
+  // query delete article
+  const result = await query(con, DELETE_ARTICLE, [req.params.article_id]).catch(
     (err) => {
       res.send(err);
     }

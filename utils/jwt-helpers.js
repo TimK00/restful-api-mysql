@@ -12,7 +12,7 @@ const refreshTokens = [];
 /**
  * expireIn is an object that can be a string or number in seconds
  *
- * usage: @link https://www.npmjs.com/package/jsonwebtoken
+ * usage: { @link https://www.npmjs.com/package/jsonwebtoken }
  *
  * example:
  *  { expiresIn: 86400 } for 24 hours in seconds

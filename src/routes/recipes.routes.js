@@ -7,6 +7,7 @@ const {
   deleteRecipe,
 } = require('../controllers/recipes.controller');
 const controllers = require('../controllers/recipes.controller');
+const canAccess = require('../middleware/auth.middleware');
 
 const recipesRoutes = express.Router();
 /**
@@ -18,14 +19,14 @@ const recipesRoutes = express.Router();
 /**
  * Routes for all recipes. Evaluates to `/recipes/`.
  */
-recipesRoutes.get('/', controllers.getAllRecipes).post('/', controllers.createRecipe);
+recipesRoutes.get('/', canAccess, controllers.getAllRecipes).post('/', canAccess, controllers.createRecipe);
 
 /**
  * Routes for a recipe by id. Evalutes to `/recipes/:recipeId`.
  */
 recipesRoutes
-  .get('/:recipeId', controllers.getRecipe) // GET http://locahost:3000/recipes/1
-  .put('/:recipeId', controllers.updateRecipe)
-  .delete('/:recipeId', controllers.deleteRecipe);
+  .get('/:recipeId', canAccess, controllers.getRecipe) // GET http://locahost:3000/recipes/1
+  .put('/:recipeId', canAccess, controllers.updateRecipe)
+  .delete('/:recipeId', canAccess, controllers.deleteRecipe);
 
 module.exports = recipesRoutes;
