@@ -35,7 +35,7 @@ exports.CREATE_ARTICLES_TABLE = `CREATE TABLE IF NOT EXISTS articles(
    * - column names match the order the are in the table
    * - `?` allow us to use params in our controllers
    */
-  exports.INSERT_ARTICLE = `INSERT INTO articles (article_name) VALUES (?)`;
+  exports.INSERT_ARTICLE = `INSERT INTO articles (article_name, author) VALUES (?, ?)`;
   
   /**
    * Update follows syntax:

@@ -5,11 +5,11 @@ const token ="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNTg4MDE5N
 
 chai.use(chaiHttp);
 
-describe('Recipes API Service', function () {
-  it('should GET all recipes', function (done) {
+describe('Articles API Service', function () {
+  it('should GET all articles', function (done) {
     chai
       .request('http://localhost:3000')
-      .get('/api/recipes')
+      .get('/api/articles')
       .set('Authorization', `Bearer ${token}`)
       .end(function (err, resp) {
         expect(resp.status).to.be.eql(200);
@@ -19,18 +19,18 @@ describe('Recipes API Service', function () {
       });
   });
 
-  it('should GET a single recipe', function (done) {
+  it('should GET a single article', function (done) {
     const expected = [
       {
-        recipe_id: 1,
-        recipe_name: "eggs",
-        difficulty: "easy",
+        article_id: 1,
+        article_name: "1st article",
+        author: "a girl",
       },
     ];
 
     chai
       .request('http://localhost:3000')
-      .get('/api/recipes/1')
+      .get('/api/articles/1')
       .set('Authorization', `Bearer ${token}`)
       .end(function (err, resp) {
         expect(resp.status).to.be.eql(200);
@@ -41,18 +41,18 @@ describe('Recipes API Service', function () {
       });
   });
 
-  it('should POST a single recipe', function (done) {
-    const newRecipe = {
-      recipe_name: "rice",
-      difficulty: "easy"
+  it('should POST a single article', function (done) {
+    const newArticle = {
+      article_name: "2nd article",
+      author: "a guy"
     };
-    const expected = { message: 'Added recipe successfully!' };
+    const expected = { message: 'Added article successfully!' };
 
     chai
       .request('http://localhost:3000')
-      .post('/api/recipes')
+      .post('/api/articles')
       .set('Authorization', `Bearer ${token}`)
-      .send(newRecipe)
+      .send(newArticle)
       .end(function (err, resp) {
         expect(resp.status).to.be.eql(200);
         expect(resp.body).to.be.eql(expected);

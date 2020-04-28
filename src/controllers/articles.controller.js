@@ -71,12 +71,11 @@ exports.createArticle = async (req, res) => {
     });
 
     // query add article
-    const result = await query(con, INSERT_ARTICLE, [req.body.article_name], [req.body.author]).catch(
+    const result = await query(con, INSERT_ARTICLE, [req.body.article_name, req.body.author]).catch(
       (err) => {
         res.send(err);
       }
     );
-    console.log(result);
 
     if (result.affectedRows === 1) {
       res.json({ message: 'Added article successfully!' });
@@ -101,7 +100,7 @@ exports.updateArticle = async (req, res) => {
   // query update article
   const result = await query(con, UPDATE_ARTICLE, [
     req.body.article_name,
-    req.body.difficulty,
+    req.body.author,
     req.params.articleId,
   ]).catch((err) => {
     res.send(err);

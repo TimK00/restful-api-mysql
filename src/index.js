@@ -31,7 +31,7 @@ app.use(cors());
 app.use('/api/auth', authRoutes); // http://localhost:3000/api/auth
 app.use('/api/user', userRoutes); // http://localhost:3000/api/user
 app.use('/api/recipes', recipesRoutes); // http://localhost:3000/api/recipes
-app.use('/api/articles', articlesRoutes); 
+app.use('/api/articles', articlesRoutes); // http://localhost:3000/api/articles
 
 // Handle 404 requests
 app.use(middleware.error404);

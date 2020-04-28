@@ -43,7 +43,7 @@ exports.register = async (req, res) => {
         .send({ msg: 'Could not register user. Please try again later.' });
     });
 
-    if (result.length) {
+    if (result.affectedRows === 1) {
       res.send({ msg: 'New user created!' });
     }
   }

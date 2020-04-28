@@ -71,12 +71,11 @@ exports.createRecipe = async (req, res) => {
     });
 
     // query add recipe
-    const result = await query(con, INSERT_RECIPE, [req.body.recipe_name], [req.body.difficulty]).catch(
+    const result = await query(con, INSERT_RECIPE, [req.body.recipe_name, req.body.difficulty]).catch(
       (err) => {
         res.send(err);
       }
     );
-    console.log(result);
 
     if (result.affectedRows === 1) {
       res.json({ message: 'Added recipe successfully!' });

@@ -7,6 +7,7 @@ const {
   deleteArticle,
 } = require('../controllers/articles.controller');
 const controllers = require('../controllers/articles.controller');
+const canAccess = require('../middleware/auth.middleware');
 
 const articlesRoutes = express.Router();
 /**
@@ -18,14 +19,14 @@ const articlesRoutes = express.Router();
 /**
  * Routes for all articles. Evaluates to `/articles/`.
  */
-articlesRoutes.get('/', controllers.getAllArticles).post('/', controllers.createArticle);
+articlesRoutes.get('/', canAccess, controllers.getAllArticles).post('/', canAccess, controllers.createArticle);
 
 /**
  * Routes for a article by id. Evalutes to `/articles/:articleId`.
  */
 articlesRoutes
-  .get('/:articleId', controllers.getArticle) // GET http://locahost:3000/articles/1
-  .put('/:articleId', controllers.updateArticle)
-  .delete('/:articleId', controllers.deleteArticle);
+  .get('/:articleId', canAccess, controllers.getArticle) // GET http://locahost:3000/articles/1
+  .put('/:articleId', canAccess, controllers.updateArticle)
+  .delete('/:articleId', canAccess, controllers.deleteArticle);
 
 module.exports = articlesRoutes;

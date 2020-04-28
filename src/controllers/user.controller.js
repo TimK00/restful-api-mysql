@@ -64,6 +64,7 @@ exports.updateMe = async function (req, res) {
       passwordHash,
       user[0].id,
     ]).catch((err) => {
+      console.log(err);
       res.status(500).send({ msg: 'Could not update user settings.' });
     });
 
