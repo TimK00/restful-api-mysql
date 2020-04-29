@@ -26,25 +26,24 @@ exports.register = async (req, res) => {
   // check for existing user first
   const user = await query(con, GET_ME_BY_USERNAME, [req.body.username]).catch(
     (err) => {
-      res.status(500);
-      res.send({ msg: 'Could not retrieve user.' });
+      res.status(500).json({ msg: 'Could not retrieve user.' });
     }
   );
 
   // if we get one result back
   if (user.length === 1) {
-    res.status(403).send({ msg: 'User already exists!' });
+    res.status(403).json({ msg: 'User already exists!' });
   } else {
     // add new user
     const result = await query(con, INSERT_NEW_USER, params).catch((err) => {
       //   stop registeration
       res
         .status(500)
-        .send({ msg: 'Could not register user. Please try again later.' });
+        .json({ msg: 'Could not register user. Please try again later.' });
     });
 
-    if (result.affectedRows === 1) {
-      res.send({ msg: 'New user created!' });
+    if (result.affect === 1) {
+      res.json({ msg: 'New user created!' });
     }
   }
 };
@@ -60,7 +59,7 @@ exports.login = async (req, res) => {
     req.body.username,
   ]).catch((err) => {
     res.status(500);
-    res.send({ msg: 'Could not retrieve user.' });
+    res.json({ msg: 'Could not retrieve user.' });
   });
 
   // if the user exists
@@ -73,7 +72,7 @@ exports.login = async (req, res) => {
       });
 
     if (!validPass) {
-      res.status(400).send({ msg: 'Invalid password!' });
+      res.status(400).json({ msg: 'Invalid password!' });
     }
     // create token
     const accessToken = generateAccessToken(user[0].user_id, {
@@ -88,7 +87,7 @@ exports.login = async (req, res) => {
 
     res
       .header('access_token', accessToken) // ex.: { 'aut-token': 'lksnenha0en4tnoaeiwnlgn3o4i'}
-      .send({
+      .json({
         auth: true,
         msg: 'Logged in!',
         token_type: 'bearer',
@@ -106,12 +105,12 @@ exports.token = (req, res) => {
   if (!refreshToken) {
     res
       .status(401)
-      .send({ auth: false, msg: 'Access Denied. No token provided.' });
+      .json({ auth: false, msg: 'Access Denied. No token provided.' });
   }
 
   // stop refresh is refresh token invalid
   if (!refreshTokens.includes(refreshToken)) {
-    res.status(403).send({ msg: 'Invalid Refresh Token' });
+    res.status(403).json({ msg: 'Invalid Refresh Token' });
   }
 
   const verified = verifyToken(refreshToken, jwtconfig.refresh, req, res);
@@ -120,7 +119,7 @@ exports.token = (req, res) => {
     const accessToken = generateToken(user[0].user_id, { expiresIn: 86400 });
     res
       .header('access_token', accessToken) // ex.: { 'aut-token': 'lksnenha0en4tnoaeiwnlgn3o4i'}
-      .send({
+      .json({
         auth: true,
         msg: 'Logged in!',
         token_type: 'bearer',
@@ -129,12 +128,12 @@ exports.token = (req, res) => {
         refresh_token: refreshToken,
       });
   }
-  res.status(403).send({ msg: 'Invalid Token' });
+  res.status(403).json({ msg: 'Invalid Token' });
 };
 
 exports.logout = (req, res) => {
   const refreshToken = req.body.token;
   refreshTokens = refreshTokens.filter((t) => t !== refreshToken);
 
-  res.send({ msg: 'Logout successful' });
+  res.json({ msg: 'Logout successful' });
 };
