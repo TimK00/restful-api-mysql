@@ -15,16 +15,21 @@
  */
 exports.CREATE_RECIPES_TABLE = `CREATE TABLE IF NOT EXISTS recipes(
     recipe_id int NOT NULL AUTO_INCREMENT,
+    user_id int NOT NULL,
     recipe_name varchar(255) NOT NULL,
     difficulty varchar(10) DEFAULT 'easy',
-    PRIMARY KEY (recipe_id)
+    PRIMARY KEY (recipe_id),
+    FOREIGN KEY (user_id) REFERENCES users(user_id)
+          ON UPDATE CASCADE
+          ON DELETE CASCADE
   )`;
   
   // Get every recipe
-  exports.ALL_RECIPES = `SELECT * FROM recipes`;
+  exports.ALL_RECIPES = (user_id) => `SELECT * FROM recipes WHERE user_id = ${userId}`;
   
   // Get a single recipe by id
-  exports.SINGLE_RECIPE = `SELECT * FROM recipes WHERE recipe_id = ?`;
+  exports.SINGLE_RECIPE = (userId, recipeId) =>
+  `SELECT * FROM recipes WHERE user_id = ${userId} AND recipe_id = ${recipeId}`;
   
   /**
    * Insert follows syntax:
@@ -35,7 +40,8 @@ exports.CREATE_RECIPES_TABLE = `CREATE TABLE IF NOT EXISTS recipes(
    * - column names match the order the are in the table
    * - `?` allow us to use params in our controllers
    */
-  exports.INSERT_RECIPE = `INSERT INTO recipes (recipe_name, difficulty) VALUES (?, ?)`;
+  exports.INSERT_RECIPE = (userId, recipeName, author) =>
+  `INSERT INTO recipes (user_id, recipe_name, author) VALUES (${userId}, ${recipeName}, ${author})`;
   
   /**
    * Update follows syntax:
@@ -43,8 +49,9 @@ exports.CREATE_RECIPES_TABLE = `CREATE TABLE IF NOT EXISTS recipes(
    *
    * NOTE: omitting `WHERE` will result in updating every existing entry.
    */
-  exports.UPDATE_RECIPE = `UPDATE recipes SET recipe_name = ?, difficulty = ? WHERE id = ?`;
+  exports.UPDATE_RECIPE = (userId, taskId, newValues) =>
+  `UPDATE recipes SET ${newValues} WHERE user_id = ${userId} AND recipe_id = ${recipeId}`;
   
   // Delete a recipe by id
-  exports.DELETE_RECIPE = `DELETE FROM recipes WHERE id = ?`;
-  
+  exports.DELETE_RECIPE = (userId, recipeId) =>
+  `DELETE FROM recipess WHERE user_id = ${userId} AND recipe_id = ${recipeId}`;

@@ -10,23 +10,21 @@ const {
 
 exports.getMe = async (req, res) => {
   // verify valid token
-  const decoded = req.user; // {id: 1, iat: wlenfwekl, expiredIn: 9174323 }
+  const user = req.user; // {id: 1, iat: wlenfwekl, expiredIn: 9174323 }
 
   // take result of middleware check
-  if (decoded.id) {
+  if (user.id) {
     // establish a connection
     const con = await connection().catch((err) => {
       throw err;
     });
 
-    const user = await query(con, GET_ME_BY_USER_ID, [decoded.id]).catch(
-      (err) => {
-        res.status(500).send({ msg: 'Could not find the user.' });
-      }
-    );
+    const user = await query(con, GET_ME_BY_USER_ID, [user.id]).catch((err) => {
+      res.status(500).json({ msg: 'Could not find the user.' });
+    });
 
     if (!user.length) {
-      res.status(400).send({ msg: 'No user found.' });
+      res.status(400).json({ msg: 'No user found.' });
     }
     res.status(200).send(user);
   }
@@ -43,7 +41,7 @@ exports.updateMe = async function (req, res) {
     req.user.id,
   ]).catch((err) => {
     res.status(500);
-    res.send({ msg: 'Could not retrieve user.' });
+    res.json({ msg: 'Could not retrieve user.' });
   });
 
   // checked for password changed
@@ -64,8 +62,7 @@ exports.updateMe = async function (req, res) {
       passwordHash,
       user[0].id,
     ]).catch((err) => {
-      console.log(err);
-      res.status(500).send({ msg: 'Could not update user settings.' });
+      res.status(500).json({ msg: 'Could not update user settings.' });
     });
 
     if (result.affectedRows === 1) {
