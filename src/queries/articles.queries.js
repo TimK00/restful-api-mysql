@@ -17,7 +17,7 @@ exports.CREATE_ARTICLES_TABLE = `CREATE TABLE IF NOT EXISTS articles(
     article_id int NOT NULL AUTO_INCREMENT,
     user_id int NOT NULL,
     article_name varchar(255) NOT NULL,
-    author varchar(255) DEFAULT 'easy',
+    author varchar(255),
     PRIMARY KEY (article_id),
     FOREIGN KEY (user_id) REFERENCES users(user_id)
           ON UPDATE CASCADE
@@ -49,10 +49,10 @@ exports.CREATE_ARTICLES_TABLE = `CREATE TABLE IF NOT EXISTS articles(
    *
    * NOTE: omitting `WHERE` will result in updating every existing entry.
    */
-  exports.UPDATE_ARTICLE = (userId, taskId, newValues) =>
+  exports.UPDATE_ARTICLE = (userId, articleId, newValues) =>
   `UPDATE articles SET ${newValues} WHERE user_id = ${userId} AND article_id = ${articleId}`;
   
-  // Delete a article by id
+  // Delete an article by id
   exports.DELETE_ARTICLE = (userId, articleId) =>
   `DELETE FROM articles WHERE user_id = ${userId} AND article_id = ${articleId}`;
   

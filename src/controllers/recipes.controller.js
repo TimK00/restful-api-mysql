@@ -76,7 +76,8 @@ exports.createRecipe = async (req, res) => {
 
     // query add recipe
     const recipeName = mysql.escape(req.body.recipe_name);
-    const result = await query(con, INSERT_RECIPE(user.id, recipeName)).catch(
+    const difficulty = mysql.escape(req.body.difficulty);
+    const result = await query(con, INSERT_RECIPE(user.id, recipeName, difficulty)).catch(
       serverError(res)
     );
 
