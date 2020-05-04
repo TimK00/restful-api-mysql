@@ -1,6 +1,5 @@
 const mysql = require('mysql');
 const { CREATE_USERS_TABLE } = require('./queries/user.queries');
-const { CREATE_RECIPES_TABLE } = require('./queries/recipes.queries');
 const { CREATE_ARTICLES_TABLE } = require("./queries/articles.queries");
 const query = require('../utils/query');
 
@@ -47,19 +46,13 @@ const connection = async () =>
     }
   );
 
-  const recipesTableCreated = await query(_con, CREATE_RECIPES_TABLE).catch(
-    (err) => {
-      console.log(err);
-    }
-  );
-
   const articlesTableCreated = await query(_con, CREATE_ARTICLES_TABLE).catch(
     (err) => {
       console.log(err);
     }
   );
 
-  if (!!userTableCreated && !!recipesTableCreated && !!articlesTableCreated) {
+  if (!!userTableCreated && !!articlesTableCreated) {
     console.log('Tables Created!');
   }
 })();

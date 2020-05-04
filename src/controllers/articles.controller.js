@@ -1,4 +1,4 @@
-const mysql = require('mysql');
+const escape = require('mysql').escape;
 const connection = require('../db-config');
 const {
   ALL_ARTICLES,
@@ -75,9 +75,8 @@ exports.createArticle = async (req, res) => {
     });
 
     // query add article
-    const articleName = mysql.escape(req.body.article_name);
-    const author = mysql.escape(req.body.author);
-    const result = await query(con, INSERT_ARTICLE(user.id, articleName, author)).catch(
+    const articleName = escape(req.body.article_name);
+    const result = await query(con, INSERT_ARTICLE(user.id, articleName)).catch(
       serverError(res)
     );
 
@@ -95,13 +94,13 @@ exports.createArticle = async (req, res) => {
  *
  * @example
  * 'key1 = value1, key2 = value2, ...'
- * "article_name = \'Article 1\', status = \'complete\', date = \'<today's_date>\'"
+ * "article_name = \'Article 1\', autho = \'complete\', date = \'<today's_date>\'"
  */
 const _buildValuesString = (req) => {
   const body = req.body;
   const values = Object.keys(body).map(
-    // [article_name, status].map()
-    (key) => `${key} = ${mysql.escape(body[key])}` // 'New 1 article name'
+    // [article_name, autho].map()
+    (key) => `${key} = ${escape(body[key])}` // 'New 1 article name'
   );
 
   values.push(`created_date = NOW()`); // update current date and time
